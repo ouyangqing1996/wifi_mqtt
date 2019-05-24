@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhupp.ems.dao.DeviceMapper">
+    <resultMap id="BaseResultMap" type="com.zhupp.ems.dto.DeviceDto">
+        <id column="ems_device_id" jdbcType="BIGINT" property="deviceId"/>
+        <result column="ems_device_name" jdbcType="VARCHAR" property="deviceName"/>
+        <result column="ems_device_address" jdbcType="VARCHAR" property="deviceAddress"/>
+        <result column="ems_device_user_id" jdbcType="VARCHAR" property="deviceUserID"/>
+        <result column="ems_device_status" jdbcType="VARCHAR" property="deviceStatus"/>
+        <result column="ems_device_create_date" jdbcType="TIMESTAMP" property="deviceCreateDate"/>
+        <result column="ems_device_update_date" jdbcType="TIMESTAMP" property="deviceUpdateDate"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        ems_device_id,
+        ems_device_name,
+        ems_device_address,
+        ems_device_user_id,
+        ems_device_status,
+        ems_device_create_date,
+        ems_device_update_date
+    </sql>
+    <select id="getDeviceListByUserID" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from ems_device
+        where ems_device_user_id=#{deviceUserID,jdbcType=VARCHAR}
+    </select>
+    <update id="updateDeviceByDeviceId" parameterType="com.zhupp.ems.dto.DeviceDto">
+        update ems_device
+        <set>
+            <if test="deviceDto.deviceName!=null">
+                ems_device_name=#{deviceDto.deviceName,jdbcType=VARCHAR},
+            </if>
+            <if test="deviceDto.deviceAddress!=null">
+                ems_device_address=#{deviceDto.deviceAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="deviceDto.deviceUpdateDate!=null">
+                ems_device_update_date=#{deviceDto.deviceUpdateDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where ems_device_id=#{deviceDto.deviceId,jdbcType=VARCHAR}
+    </update>
+    <delete id="deleteDeviceList" >
+        delete from ems_device
+        where ems_device_id in
+        <foreach item="item" index="index" collection="deviceDtos" open="(" separator="," close=")">
+            #{item.deviceId,jdbcType=VARCHAR}
+        </foreach>
+    </delete>
+
+</mapper>

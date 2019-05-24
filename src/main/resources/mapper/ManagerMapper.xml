@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhupp.ems.dao.ManagerMapper">
+    <resultMap id="BaseResultMap" type="com.zhupp.ems.dto.UserDto">
+        <id column="ems_user_info_id" jdbcType="BIGINT" property="userInfoId"/>
+        <result column="ems_user_id" jdbcType="VARCHAR" property="userID"/>
+        <result column="ems_user_password" jdbcType="VARCHAR" property="userPassword"/>
+    </resultMap>
+    <select id="getPasswordByUserID" parameterType="java.lang.String" resultType="java.lang.String">
+        select ems_user_password
+        from ems_manager
+        where ems_user_id=#{userID,jdbcType=VARCHAR}
+    </select>
+</mapper>
