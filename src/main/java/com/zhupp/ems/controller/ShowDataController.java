@@ -5,6 +5,10 @@ import com.zhupp.ems.dto.*;
 import com.zhupp.ems.service.DeviceService;
 import com.zhupp.ems.service.UserService;
 import com.zhupp.ems.util.*;
+import com.zhupp.ems.util.po.Data;
+import com.zhupp.ems.util.po.Device;
+import com.zhupp.ems.util.po.PageQueryParam;
+import com.zhupp.ems.util.po.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -32,46 +36,46 @@ public class ShowDataController {
      * @return
      */
     @PostMapping(value = "/device/list")
-    public Result getDeviceList(@RequestBody UserDto userDto) {
-        log.info("获取用户设备:" + JSON.toJSONString(userDto));
-        List<DeviceDto> deviceList = deviceService.getDeviceListByUserID(userDto.getUserID());
+    public Result getDeviceList(@RequestBody User user) {
+        log.info("获取用户设备:" + JSON.toJSONString(user));
+        List<Device> deviceList = deviceService.getDeviceListByUserID(user.getEmsUserId());
         return new Result(deviceList);
     }
     /**
      * 更改用户名
      */
     @PostMapping(value = "/rename")
-    public Result rename(@RequestBody UserDto userDto) {
-        log.info("更改用户名："+ JSON.toJSONString(userDto));
-        userService.rename(userDto);
+    public Result rename(@RequestBody User user) {
+        log.info("更改用户名："+ JSON.toJSONString(user));
+        userService.rename(user);
         return new Result();
     }
     /**
      * 更改密码
      */
     @PostMapping(value = "/repassword")
-    public Result repassword(@RequestBody UserDto userDto) {
-        log.info("更改密码："+ JSON.toJSONString(userDto));
-        userService.repassword(userDto);
+    public Result repassword(@RequestBody User user) {
+        log.info("更改密码："+ JSON.toJSONString(user));
+        userService.repassword(user);
         return new Result();
     }
     /**
      * 获取密码
      */
     @PostMapping(value = "/getpassword")
-    public Result getPassword(@RequestBody UserDto userDto) {
-        log.info("获取密码："+ JSON.toJSONString(userDto));
-        userService.getPassword(userDto);
-        return new Result(userDto);
+    public Result getPassword(@RequestBody User user) {
+        log.info("获取密码："+ JSON.toJSONString(user));
+        userService.getPassword(user);
+        return new Result(user);
     }
     /**
      * 添加设备
      * 尚未实现，必须有硬件支持
      */
     @PostMapping(value = "/device/add")
-    public Result addDevice(@RequestBody DeviceDto deviceDto) {
-        log.info("添加设备："+ JSON.toJSONString(deviceDto));
-//        deviceService.insert(deviceDto);
+    public Result addDevice(@RequestBody Device device) {
+        log.info("添加设备："+ JSON.toJSONString(device));
+//        deviceService.insert(device);
         return new Result();
     }
 
@@ -79,9 +83,9 @@ public class ShowDataController {
      * 更新设备
      */
     @PostMapping(value = "/device/update")
-    public Result updateDevice(@RequestBody DeviceDto deviceDto) {
-        log.info("更新设备："+ JSON.toJSONString(deviceDto));
-        deviceService.updateDeviceByDeviceId(deviceDto);
+    public Result updateDevice(@RequestBody Device device) {
+        log.info("更新设备："+ JSON.toJSONString(device));
+        deviceService.updateDeviceByDeviceId(device);
         return new Result();
     }
 
@@ -89,9 +93,9 @@ public class ShowDataController {
      * 删除设备
      */
     @PostMapping(value = "/device/delete")
-    public Result deleteDeviceList(@RequestBody DeviceListDto deviceListDto) {
-        log.info("删除设备："+ JSON.toJSONString(deviceListDto));
-        deviceService.deleteDeviceList(deviceListDto);
+    public Result deleteDeviceList(@RequestBody List<Device> deviceList) {
+        log.info("删除设备："+ JSON.toJSONString(deviceList));
+        deviceService.deleteDeviceList(deviceList);
         return new Result();
 
     }
@@ -104,7 +108,7 @@ public class ShowDataController {
     @PostMapping(value = "/device/data")
     public Result getDeviceData(@RequestBody PageQueryParam<String> pageQueryParam) {
         log.info("获取数据："+JSON.toJSONString(pageQueryParam));
-       PageBean<DataDto> pageBean= deviceService.getDeviceData(pageQueryParam);
+       PageBean<Data> pageBean= deviceService.getDeviceData(pageQueryParam);
         return new Result(pageBean);
     }
 

@@ -6,6 +6,7 @@ import com.zhupp.ems.service.UserService;
 import com.zhupp.ems.util.Result;
 import com.zhupp.ems.util.ResultEnum;
 import com.zhupp.ems.dto.UserDto;
+import com.zhupp.ems.util.po.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,9 +33,9 @@ public class managerController {
      * 管理员禁用用户
      */
     @PostMapping(value = "/forbid")
-    public Result forbidUser(@RequestBody UserDto userDto) {
-        log.info("禁用用户:"+ JSON.toJSONString(userDto));
-        userService.forbidUser(userDto);
+    public Result forbidUser(@RequestBody User user) {
+        log.info("禁用用户:"+ JSON.toJSONString(user));
+        userService.forbidUser(user);
         return new Result(ResultEnum.SUCCESS);
 
     }
@@ -42,13 +43,13 @@ public class managerController {
     /**
      * 管理员解除禁用
      *
-     * @param userDto
+     * @param
      * @return
      */
     @PostMapping(value = "/unforbid")
-    public Result unforbidUser(@RequestBody UserDto userDto) {
-        log.info("解除禁用用户:"+ JSON.toJSONString(userDto));
-        userService.unforbidUser(userDto);
+    public Result unforbidUser(@RequestBody User user) {
+        log.info("解除禁用用户:"+ JSON.toJSONString(user));
+        userService.unforbidUser(user);
         return new Result(ResultEnum.SUCCESS);
 
     }
@@ -60,20 +61,20 @@ public class managerController {
      * @return
      */
     @PostMapping(value = "/manager/list")
-    public Result getUserList(@RequestBody UserDto userDto) {
-        log.info("获取用户列表:"+ JSON.toJSONString(userDto));
-        List<UserDto> userList = userService.getUserList();
+    public Result getUserList(@RequestBody User user) {
+        log.info("获取用户列表:"+ JSON.toJSONString(user));
+        List<user> userList = userService.getUserList();
         return new Result(userList);
     }
 
     /**
      * 管理员界面展示用户设备
      *
-     * @param userLoginDto
+     * @param
      * @return
      */
     @PostMapping(value = "/manager/device/list")
-    public Result getDeviceListByUserName(@RequestBody UserDto userLoginDto) {
-        return new Result(deviceService.getDeviceListByUserID(userLoginDto.getUserID()));
+    public Result getDeviceListByUserName(@RequestBody User user) {
+        return new Result(deviceService.getDeviceListByUserID(user.getEmsUserId()));
     }
 }

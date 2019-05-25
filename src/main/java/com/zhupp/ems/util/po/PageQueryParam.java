@@ -1,4 +1,4 @@
-package com.zhupp.ems.dto;
+package com.zhupp.ems.util.po;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
