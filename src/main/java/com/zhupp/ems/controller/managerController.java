@@ -5,7 +5,6 @@ import com.zhupp.ems.service.DeviceService;
 import com.zhupp.ems.service.UserService;
 import com.zhupp.ems.util.Result;
 import com.zhupp.ems.util.ResultEnum;
-import com.zhupp.ems.dto.UserDto;
 import com.zhupp.ems.util.po.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +62,7 @@ public class managerController {
     @PostMapping(value = "/manager/list")
     public Result getUserList(@RequestBody User user) {
         log.info("获取用户列表:"+ JSON.toJSONString(user));
-        List<user> userList = userService.getUserList();
+        List<User> userList = userService.getUserList();
         return new Result(userList);
     }
 

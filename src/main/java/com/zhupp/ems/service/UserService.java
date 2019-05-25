@@ -1,6 +1,8 @@
 package com.zhupp.ems.service;
 
-import com.zhupp.ems.dto.UserDto;
+import com.zhupp.ems.dao.UserMapper;
+import com.zhupp.ems.util.po.User;
+import com.zhupp.ems.util.po.UserExample;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -27,54 +29,69 @@ public class UserService {
 
 
     public List getUserList() {
-        List<UserDto> list= userMapper.getUserList();
+        UserExample example = new UserExample();
+        example.createCriteria().andEmsUserIdIsNotNull();
+        List<User> list = userMapper.selectByExample(example); //modified by oyq
         return list;
     }
 
     /**
      * 解除禁用用户
      *
-     * @param userDto
+     * @param user
      */
-    public void unforbidUser(UserDto userDto) {
-        userDto.setUserStatus("0");
-        userDto.setUserUpdateDate(new Date());
-        userMapper.updateUser(userDto);
+    public void unforbidUser(User user) {
+        user.setEmsUserStatus("0");
+        user.setEmsUserUpdateTime(new Date());
+        UserExample example = new UserExample();
+        example.createCriteria().andEmsUserIdEqualTo(user.getEmsUserId());
+        userMapper.updateByExampleSelective(user,example);
     }
 
     /**
      * 禁用用户
      *
-     * @param userDto
+     * @param user
      */
-    public void forbidUser(UserDto userDto) {
-        userDto.setUserStatus("1");
-        userDto.setUserUpdateDate(new Date());
-        userMapper.updateUser(userDto);
+    public void forbidUser(User user) {
+        user.setEmsUserStatus("1");
+        user.setEmsUserUpdateTime(new Date());
+        UserExample example = new UserExample();
+        example.createCriteria().andEmsUserIdEqualTo(user.getEmsUserId());
+        userMapper.updateByExample(user,example);
     }
 
     /**
      * 更改用户名
      */
-    public void rename(UserDto userDto) {
-        userDto.setUserUpdateDate(new Date());
-        userMapper.updateUser(userDto);
+    public void rename(User user) {
+        user.setEmsUserUpdateTime(new Date());
+        UserExample example = new UserExample();
+        example.createCriteria().andEmsUserIdEqualTo(user.getEmsUserId());
+        userMapper.updateByExample(user,example);
+
     }
 
     /**
      * 更改密码
      */
-    public void repassword(UserDto userDto) {
-        userDto.setUserUpdateDate(new Date());
-        userMapper.updateUser(userDto);
+    public void repassword(User user) {
+        user.setEmsUserUpdateTime(new Date());
+        UserExample example = new UserExample();
+        example.createCriteria().andEmsUserIdEqualTo(user.getEmsUserId());
+        userMapper.updateByExample(user,example);
     }
 
     /**
      * 获取密码
      */
-    public void getPassword(UserDto userDto) {
-        String password = userMapper.getPasswordByUserID(userDto.getUserID());
-        userDto.setUserPassword(password);
+    public void getPassword(User user) {
+        user.setEmsUserUpdateTime(new Date());
+        UserExample example = new UserExample();
+        example.createCriteria().andEmsUserIdEqualTo(user.getEmsUserId());
+        List<User> users = userMapper.selectByExample(example);
+        String password1 = users.get(0).getEmsUserPassword();
+        user.setEmsUserPassword(password1);
     }
 
 
