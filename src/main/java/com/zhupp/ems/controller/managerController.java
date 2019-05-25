@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @Slf4j
-@RequestMapping("/ems/magnager")
+@RequestMapping("/ems/manager")
 /**
  * 管理模块
  */
