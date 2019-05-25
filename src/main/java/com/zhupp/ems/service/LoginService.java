@@ -3,8 +3,6 @@ package com.zhupp.ems.service;
 import com.zhupp.ems.util.Result;
 import com.zhupp.ems.util.ResultEnum;
 import com.zhupp.ems.dto.UserDto;
-import com.zhupp.ems.dao.ManagerMapper;
-import com.zhupp.ems.dao.UserMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -38,4 +38,5 @@ public class UserDto implements Serializable {
      * 更新时间
      */
     private Date userUpdateDate;
+
 }

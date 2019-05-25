@@ -6,8 +6,6 @@ import com.zhupp.ems.dto.DeviceDto;
 import com.zhupp.ems.dto.DeviceListDto;
 import com.zhupp.ems.dto.PageQueryParam;
 import com.zhupp.ems.util.*;
-import com.zhupp.ems.dao.DataMapper;
-import com.zhupp.ems.dao.DeviceMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
