@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhupp.ems.dao.DeviceMapper">
+  <resultMap id="BaseResultMap" type="com.zhupp.ems.util.po.Device">
+    <result column="ems_device_info_id" jdbcType="BIGINT" property="emsDeviceInfoId" />
+    <result column="ems_device_user_id" jdbcType="VARCHAR" property="emsDeviceUserId" />
+    <result column="ems_device_status" jdbcType="VARCHAR" property="emsDeviceStatus" />
+    <result column="ems_device_create_time" jdbcType="TIMESTAMP" property="emsDeviceCreateTime" />
+    <result column="ems_device_update_time" jdbcType="TIMESTAMP" property="emsDeviceUpdateTime" />
+    <result column="ems_device_address" jdbcType="VARCHAR" property="emsDeviceAddress" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ems_device_info_id, ems_device_user_id, ems_device_status, ems_device_create_time, 
+    ems_device_update_time, ems_device_address
+  </sql>
+  <select id="selectByExample" parameterType="com.zhupp.ems.util.po.DeviceExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ems_device
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.zhupp.ems.util.po.DeviceExample">
+    delete from ems_device
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zhupp.ems.util.po.Device">
+    insert into ems_device (ems_device_info_id, ems_device_user_id, 
+      ems_device_status, ems_device_create_time, 
+      ems_device_update_time, ems_device_address
+      )
+    values (#{emsDeviceInfoId,jdbcType=BIGINT}, #{emsDeviceUserId,jdbcType=VARCHAR}, 
+      #{emsDeviceStatus,jdbcType=VARCHAR}, #{emsDeviceCreateTime,jdbcType=TIMESTAMP}, 
+      #{emsDeviceUpdateTime,jdbcType=TIMESTAMP}, #{emsDeviceAddress,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zhupp.ems.util.po.Device">
+    insert into ems_device
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="emsDeviceInfoId != null">
+        ems_device_info_id,
+      </if>
+      <if test="emsDeviceUserId != null">
+        ems_device_user_id,
+      </if>
+      <if test="emsDeviceStatus != null">
+        ems_device_status,
+      </if>
+      <if test="emsDeviceCreateTime != null">
+        ems_device_create_time,
+      </if>
+      <if test="emsDeviceUpdateTime != null">
+        ems_device_update_time,
+      </if>
+      <if test="emsDeviceAddress != null">
+        ems_device_address,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="emsDeviceInfoId != null">
+        #{emsDeviceInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="emsDeviceUserId != null">
+        #{emsDeviceUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="emsDeviceStatus != null">
+        #{emsDeviceStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="emsDeviceCreateTime != null">
+        #{emsDeviceCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="emsDeviceUpdateTime != null">
+        #{emsDeviceUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="emsDeviceAddress != null">
+        #{emsDeviceAddress,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zhupp.ems.util.po.DeviceExample" resultType="java.lang.Long">
+    select count(*) from ems_device
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ems_device
+    <set>
+      <if test="record.emsDeviceInfoId != null">
+        ems_device_info_id = #{record.emsDeviceInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="record.emsDeviceUserId != null">
+        ems_device_user_id = #{record.emsDeviceUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.emsDeviceStatus != null">
+        ems_device_status = #{record.emsDeviceStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.emsDeviceCreateTime != null">
+        ems_device_create_time = #{record.emsDeviceCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.emsDeviceUpdateTime != null">
+        ems_device_update_time = #{record.emsDeviceUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.emsDeviceAddress != null">
+        ems_device_address = #{record.emsDeviceAddress,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ems_device
+    set ems_device_info_id = #{record.emsDeviceInfoId,jdbcType=BIGINT},
+      ems_device_user_id = #{record.emsDeviceUserId,jdbcType=VARCHAR},
+      ems_device_status = #{record.emsDeviceStatus,jdbcType=VARCHAR},
+      ems_device_create_time = #{record.emsDeviceCreateTime,jdbcType=TIMESTAMP},
+      ems_device_update_time = #{record.emsDeviceUpdateTime,jdbcType=TIMESTAMP},
+      ems_device_address = #{record.emsDeviceAddress,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>
