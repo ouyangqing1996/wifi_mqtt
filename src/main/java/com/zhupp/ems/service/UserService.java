@@ -1,7 +1,6 @@
 package com.zhupp.ems.service;
 
 import com.zhupp.ems.dao.UserMapper;
-import com.zhupp.ems.dto.UserDto;
 import com.zhupp.ems.util.po.User;
 import com.zhupp.ems.util.po.UserExample;
 import lombok.extern.slf4j.Slf4j;

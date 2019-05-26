@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhupp.ems.dao.DataMapper">
+  <resultMap id="BaseResultMap" type="com.zhupp.ems.util.po.Data">
+    <result column="ems_data_info_id" jdbcType="BIGINT" property="emsDataInfoId" />
+    <result column="ems_data_message" jdbcType="VARCHAR" property="emsDataMessage" />
+    <result column="ems_data_message_type" jdbcType="VARCHAR" property="emsDataMessageType" />
+    <result column="ems_data_create_time" jdbcType="TIMESTAMP" property="emsDataCreateTime" />
+    <result column="ems_data_device_id" jdbcType="VARCHAR" property="emsDataDeviceId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ems_data_info_id, ems_data_message, ems_data_message_type, ems_data_create_time, 
+    ems_data_device_id
+  </sql>
+  <select id="selectByExample" parameterType="com.zhupp.ems.util.po.DataExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ems_data
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.zhupp.ems.util.po.DataExample">
+    delete from ems_data
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zhupp.ems.util.po.Data">
+    insert into ems_data (ems_data_info_id, ems_data_message, ems_data_message_type, 
+      ems_data_create_time, ems_data_device_id)
+    values (#{emsDataInfoId,jdbcType=BIGINT}, #{emsDataMessage,jdbcType=VARCHAR}, #{emsDataMessageType,jdbcType=VARCHAR}, 
+      #{emsDataCreateTime,jdbcType=TIMESTAMP}, #{emsDataDeviceId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zhupp.ems.util.po.Data">
+    insert into ems_data
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="emsDataInfoId != null">
+        ems_data_info_id,
+      </if>
+      <if test="emsDataMessage != null">
+        ems_data_message,
+      </if>
+      <if test="emsDataMessageType != null">
+        ems_data_message_type,
+      </if>
+      <if test="emsDataCreateTime != null">
+        ems_data_create_time,
+      </if>
+      <if test="emsDataDeviceId != null">
+        ems_data_device_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="emsDataInfoId != null">
+        #{emsDataInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="emsDataMessage != null">
+        #{emsDataMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="emsDataMessageType != null">
+        #{emsDataMessageType,jdbcType=VARCHAR},
+      </if>
+      <if test="emsDataCreateTime != null">
+        #{emsDataCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="emsDataDeviceId != null">
+        #{emsDataDeviceId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zhupp.ems.util.po.DataExample" resultType="java.lang.Long">
+    select count(*) from ems_data
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ems_data
+    <set>
+      <if test="record.emsDataInfoId != null">
+        ems_data_info_id = #{record.emsDataInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="record.emsDataMessage != null">
+        ems_data_message = #{record.emsDataMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.emsDataMessageType != null">
+        ems_data_message_type = #{record.emsDataMessageType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.emsDataCreateTime != null">
+        ems_data_create_time = #{record.emsDataCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.emsDataDeviceId != null">
+        ems_data_device_id = #{record.emsDataDeviceId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ems_data
+    set ems_data_info_id = #{record.emsDataInfoId,jdbcType=BIGINT},
+      ems_data_message = #{record.emsDataMessage,jdbcType=VARCHAR},
+      ems_data_message_type = #{record.emsDataMessageType,jdbcType=VARCHAR},
+      ems_data_create_time = #{record.emsDataCreateTime,jdbcType=TIMESTAMP},
+      ems_data_device_id = #{record.emsDataDeviceId,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.zhupp.ems.service.LoginService;
 import com.zhupp.ems.util.Result;
 import com.zhupp.ems.util.ResultEnum;
-import com.zhupp.ems.dto.UserDto;
+import com.zhupp.ems.util.po.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -24,26 +24,26 @@ public class UserLoginController {
 
     /**
      * 用户登录
-     * @param userDto
+     * @param
      * @param request
      * @return
      */
     @PostMapping(value = "/userLogin")
-    public Result userLogin(@RequestBody @Validated UserDto userDto, HttpServletRequest request) {
-        log.info("用户正在登录"+ JSON.toJSONString(userDto));
-        return loginService.userLogin(userDto, request);
+    public Result userLogin(@RequestBody @Validated User user, HttpServletRequest request) {
+        log.info("用户正在登录"+ JSON.toJSONString(user));
+        return loginService.userLogin(user, request);
     }
 
     /**
      * 管理员登录
-     * @param userDto
+     * @param
      * @param request
      * @return
      */
     @PostMapping(value = "/managerLogin")
-    public Result managerLogin(@RequestBody @Validated UserDto userDto, HttpServletRequest request) {
-        log.info("管理员正在登录"+ JSON.toJSONString(userDto));
-        return loginService.managerLogin(userDto, request);
+    public Result managerLogin(@RequestBody @Validated User user, HttpServletRequest request) {
+        log.info("管理员正在登录"+ JSON.toJSONString(user));
+        return loginService.managerLogin(user, request);
     }
 
     /**
