@@ -24,11 +24,11 @@
         </encoder>
        
     </appender>
-    <logger name="com.apache.ibatis" level="TRACE"/>
-    <logger name="java.sql.Connection" level="DEBUG"/>
-    <logger name="java.sql.Statement" level="DEBUG"/>
-    <logger name="java.sql.PreparedStatement" level="DEBUG"/>
-    <logger name="com.zhupp.ems.dao" level="debug"/>
+    <logger name="com.apache.ibatis" level="INFO"/>
+    <logger name="java.sql.Connection" level="INFO"/>
+    <logger name="java.sql.Statement" level="INFO"/>
+    <logger name="java.sql.PreparedStatement" level="INFO"/>
+    <logger name="com.zhupp.ems.dao" level="INFO"/>
     <root level="%{logLevel}">
     
         <appender-ref ref="STDOUT" />
