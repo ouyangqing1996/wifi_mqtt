@@ -1,10 +1,16 @@
-package com.zhupp.ems.util.mqtt;
+package com.zhupp.ems.util;
 
+import com.zhupp.ems.util.mqtt.MyMqttCallback;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.*;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 
 @Slf4j
+@Component
+@ConfigurationProperties(prefix = "matt")
 public class MyMqttClient {
     private static MqttClient client;
 
@@ -15,22 +21,19 @@ public class MyMqttClient {
     public static void setClient(MqttClient client) {
         MyMqttClient.client=client;
     }
+    @Value("${mqtt.host}")
     private String host;
+    @Value("${mqtt.username}")
     private String username;
+    @Value("${mqtt.password}")
     private String password;
+    @Value("${mqtt.clientId}")
     private String clientId;
+    @Value("${mqtt.timeout}")
     private int timeout;
+    @Value("${mqtt.keepalive}")
     private int keepalive;
 
-    public MyMqttClient(String host, String username, String password, String clientId, int timeout, int keepalive) {
-        this.host = host;
-        this.username = username;
-        this.password = password;
-        this.clientId = clientId;
-        this.timeout = timeout;
-        this.keepalive = keepalive;
-
-    }
 
     public MqttConnectOptions setMqttConnectOptions(String username, String password, int timeout, int keepalive) {
         MqttConnectOptions options = new MqttConnectOptions();
@@ -92,11 +95,13 @@ public class MyMqttClient {
         }
     }
 
-    public void subscribe(String topic,int qos) {
+    //以上是配置好客户端，接下来使用
+    public static void subscribe(String topic,int qos, IMqttMessageListener listener) {
         try {
-            MyMqttClient.getClient().subscribe(topic, qos);
+            MyMqttClient.getClient().subscribe(topic, qos, listener);
         } catch (MqttException e) {
             e.printStackTrace();
         }
     }
 }
+
