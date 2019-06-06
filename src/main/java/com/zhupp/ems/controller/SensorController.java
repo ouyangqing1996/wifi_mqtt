@@ -56,8 +56,9 @@ public class SensorController {
     }
     @GetMapping("matt")
     public String t2() throws MqttException {
-        myMqttClient.connect();
-        MyMqttClient.subscribe("ouyang", 1, new IMqttMessageListener() {
+//        myMqttClient.connect();
+
+        myMqttClient.subscribe("ouyang", 1, new IMqttMessageListener() {
             @Override
             public void messageArrived(String topic, MqttMessage message) throws Exception {
                 System.out.println(message.toString());

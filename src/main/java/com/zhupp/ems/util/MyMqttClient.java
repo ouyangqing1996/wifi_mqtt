@@ -9,8 +9,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Slf4j
-@Component
-@ConfigurationProperties(prefix = "matt")
 public class MyMqttClient {
     private static MqttClient client;
 
@@ -33,6 +31,11 @@ public class MyMqttClient {
     private int timeout;
     @Value("${mqtt.keepalive}")
     private int keepalive;
+
+    public MyMqttClient(String host,String username,String password,String clientId,int timeout, int keepalive){
+        this.host = host;this.username=username; this.password=password; this.clientId=clientId; this.timeout=timeout;this.keepalive=keepalive;
+    }
+
 
 
     public MqttConnectOptions setMqttConnectOptions(String username, String password, int timeout, int keepalive) {
