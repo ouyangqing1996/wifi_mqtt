@@ -1,12 +1,9 @@
 package com.zhupp.ems.util;
 
-import com.zhupp.ems.util.mqtt.MyMqttCallback;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.*;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
 
 @Slf4j
 public class MyMqttClient {
