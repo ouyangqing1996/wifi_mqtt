@@ -51,14 +51,17 @@ public class MyMqttClient {
     public void connect() throws MqttException {
         if (client == null) {
             client = new MqttClient(host, clientId, new MemoryPersistence());
-            client.setCallback(new MyMqttCallback(MyMqttClient.this));
         }
         MqttConnectOptions options = setMqttConnectOptions(username, password, timeout, keepalive);
         if (!client.isConnected()) {
             client.connect(options);
+
+//            client.setCallback(new MyMqttCallback(MyMqttClient.this));不要用callback了，有bug 。  直接在订阅时指定listener即可。
         }else{
             client.disconnect();
             client.connect(options);
+//          client.setCallback(new MyMqttCallback(MyMqttClient.this)); //哪个沙雕写的callback，害朕找了半天没发现bug在哪里，但就是有bug
+
         }
         log.info("Mqtt connect success");
     }
@@ -98,10 +101,10 @@ public class MyMqttClient {
         }
     }
 
-    //以上是配置好客户端，接下来使用
-    public static void subscribe(String topic,int qos, IMqttMessageListener listener) {
+    //以上是配置好客户端，下来使用
+    public static void subscribe(String topic,int qos) {
         try {
-            MyMqttClient.getClient().subscribe(topic, qos, listener);
+            MyMqttClient.getClient().subscribe(topic, qos);
         } catch (MqttException e) {
             e.printStackTrace();
         }

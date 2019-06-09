@@ -2,7 +2,9 @@ package com.zhupp.ems.util.mqtt;
 
 import com.zhupp.ems.util.MyMqttClient;
 import lombok.extern.slf4j.Slf4j;
+import org.eclipse.paho.client.mqttv3.IMqttMessageListener;
 import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
@@ -30,11 +32,11 @@ public class MqttFactory {
         for (int i = 0; i < 5; i++) {
             try {
                 myMqttClient.connect();
+//                myMqttClient.subscribe("cid/#", 1);
+                System.out.println("已经订阅了所有 topic");
                 Thread.sleep(2000);
                 return myMqttClient;
-            } catch (MqttException e) {
-                e.printStackTrace();
-            }catch (InterruptedException e) {
+            } catch (MqttException|InterruptedException e) {
                 e.printStackTrace();
             }
         }
