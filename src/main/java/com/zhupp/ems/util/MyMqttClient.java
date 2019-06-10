@@ -35,7 +35,7 @@ public class MyMqttClient {
 
 
 
-    public MqttConnectOptions setMqttConnectOptions(String username, String password, int timeout, int keepalive) {
+    private MqttConnectOptions setMqttConnectOptions(String username, String password, int timeout, int keepalive) {
         MqttConnectOptions options = new MqttConnectOptions();
         options.setUserName(username);
         options.setPassword(password.toCharArray());
@@ -52,7 +52,6 @@ public class MyMqttClient {
         MqttConnectOptions options = setMqttConnectOptions(username, password, timeout, keepalive);
         if (!client.isConnected()) {
             client.connect(options);
-
 //            client.setCallback(new MyMqttCallback(MyMqttClient.this));不要用callback了，有bug 。  直接在订阅时指定listener即可。
         }else{
             client.disconnect();
@@ -74,7 +73,7 @@ public class MyMqttClient {
      * @param qos 消息等级
      * @param retained 留存
      */
-    public void publish(String pushMessage, String topic, int qos, boolean retained) {
+    private void publish(String pushMessage, String topic, int qos, boolean retained) {
         MqttMessage message = new MqttMessage();
         message.setPayload(pushMessage.getBytes());
         message.setQos(qos);
@@ -88,20 +87,17 @@ public class MyMqttClient {
             try {
                 token = mqttTopic.publish(message);
                 token.waitForCompletion(1000L);
-            } catch (MqttPersistenceException e) {
-                e.printStackTrace();
             } catch (MqttException e) {
                 e.printStackTrace();
-
             }
 
         }
     }
 
     //以上是配置好客户端，下来使用
-    public static void subscribe(String topic,int qos) {
+    public static void subscribe(String topic,int qos,IMqttMessageListener listener) {
         try {
-            MyMqttClient.getClient().subscribe(topic, qos);
+            MyMqttClient.getClient().subscribe(topic, qos, listener);
         } catch (MqttException e) {
             e.printStackTrace();
         }

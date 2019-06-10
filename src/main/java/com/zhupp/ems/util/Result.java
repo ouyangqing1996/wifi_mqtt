@@ -22,11 +22,11 @@ public class Result<T> implements Serializable {
         this.timeStamp = Long.toString(System.currentTimeMillis());
     }
 
-    public Result(ResultEnum resultEnum) {
+    private Result(ResultEnum resultEnum) {
         this(resultEnum.code, resultEnum.msg, null);
     }
 
-    public Result(ResultEnum resultEnum, T data) {
+    private Result(ResultEnum resultEnum, T data) {
         this(resultEnum.code, resultEnum.msg, data);
     }
 
@@ -34,7 +34,7 @@ public class Result<T> implements Serializable {
         this(ResultEnum.SUCCESS, data);
     }
 
-    public Result(String retCode, String retMsg) {
+    private Result(String retCode, String retMsg) {
         this(retCode, retMsg, null);
     }
 
@@ -43,7 +43,7 @@ public class Result<T> implements Serializable {
     }
 
 
-    public boolean isSuccess() {
+    private boolean isSuccess() {
         return ResultEnum.SUCCESS.code.equals(retCode);
     }
 

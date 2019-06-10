@@ -32,7 +32,13 @@ public class MqttFactory {
         for (int i = 0; i < 5; i++) {
             try {
                 myMqttClient.connect();
-//                myMqttClient.subscribe("cid/#", 1);
+                myMqttClient.subscribe("cid/#", 1, new IMqttMessageListener() {
+                    @Override
+                    public void messageArrived(String topic, MqttMessage message) throws Exception {
+                        System.out.println(topic);
+                        System.out.println(message.toString());
+                    }
+                });
                 System.out.println("已经订阅了所有 topic");
                 Thread.sleep(2000);
                 return myMqttClient;

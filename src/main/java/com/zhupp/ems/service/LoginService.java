@@ -29,7 +29,7 @@ public class LoginService {
      * @param
      * @return
      */
-    public Result userLogin(User user, HttpServletRequest request) {
+    public Result<ResultEnum> userLogin(User user, HttpServletRequest request) {
         UserExample example = new UserExample();
         example.createCriteria().andEmsUserIdEqualTo(user.getEmsUserId());
         //根据账户只会有一个密码
@@ -41,7 +41,7 @@ public class LoginService {
      * 管理员登录
      * 前端注意，管理员的账号密码也用了User封装。
      */
-    public Result managerLogin(User user, HttpServletRequest request) {
+    public Result<ResultEnum> managerLogin(User user, HttpServletRequest request) {
         ManagerExample example = new ManagerExample();
         example.createCriteria().andEmsManagerIdEqualTo(user.getEmsUserId());
         //根据账户只会有一个密码
@@ -64,18 +64,18 @@ public class LoginService {
      * @param
      * @return
      */
-    private static Result login(String userPassword, User user, HttpServletRequest request) {
+    private static Result<ResultEnum> login(String userPassword, User user, HttpServletRequest request) {
         if (StringUtil.isEmpty(userPassword)) {
-            return new Result(ResultEnum.NOT_USERID);
+            return new Result<>(ResultEnum.NOT_USERID);
         } else {
             if (!user.getEmsUserPassword().equals(userPassword)) {
-                return new Result(ResultEnum.PASSWORD_ERROR);
+                return new Result<>(ResultEnum.PASSWORD_ERROR);
             }
         }
         HttpSession session = request.getSession();
         session.setAttribute("userID", user.getEmsUserId());
         session.setAttribute("isVailid", UUID.randomUUID());
         log.info("账号登录成功");
-        return new Result(ResultEnum.SUCCESS);
+        return new Result<>(ResultEnum.SUCCESS);
     }
 }
