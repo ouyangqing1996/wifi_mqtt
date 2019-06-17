@@ -22,6 +22,7 @@ public class LoginService {
 
     @Autowired
     private UserMapper userMapper;
+
     @Autowired
     private ManagerMapper managerMapper;
     /**
